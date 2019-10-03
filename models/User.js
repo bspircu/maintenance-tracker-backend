@@ -1,6 +1,6 @@
-const { Model } = require("objection");
+const BaseModel = require("./BaseModel");
 
-class User extends Model {
+class User extends BaseModel {
   static tableName() {
     return "users";
   }
