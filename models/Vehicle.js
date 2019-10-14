@@ -1,28 +1,28 @@
 const BaseModel = require("./BaseModel");
 const { Model, ref } = require("objection");
 
-class User extends BaseModel {
+class Vehicle extends BaseModel {
   static tableName() {
-    return "users";
+    return "vehicles";
   }
   static get relationMappings() {
-    const Vehicle = require("./Vehicle");
+    const User = require("./User");
     return {
-      vehicles: {
-        relation: Model.HasManyRelation,
-        modelClass: Vehicle,
+      owner: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: User,
         join: {
-          from: "users.id",
+          from: "vehicles.owner_id",
           // Any of the `to` and `from` fields can also be
           // references to nested fields (or arrays of references).
           // Here the relation is created between `persons.id` and
           // `animals.json.details.ownerId` properties. The reference
           // must be cast to the same type as the other key.
-          to: "vehicles.owner_id"
+          to: "user.id"
         }
       }
     };
   }
 }
 
-module.exports = User;
+module.exports = Vehicle;

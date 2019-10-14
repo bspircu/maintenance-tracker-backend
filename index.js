@@ -13,13 +13,15 @@ async function main() {
   });
 
   Model.knex(dataBase);
-  //   const newUser = await User.query().insert({
-  //     id: "3",
-  //     firstName: "Justin",
-  //     lastName: "Fisse"
-  //   });
-  const allUsers = await User.query();
-  console.log(allUsers);
+  //   const pets = await person
+  //   .$relatedQuery('pets')
+  //   .where('species', 'dog')
+  //   .orderBy('name');
+  const bryan = await User.query()
+    .findOne({ first_name: "Bryan" })
+    .eager("vehicles");
+
+  console.log(bryan);
 }
 
 main();
