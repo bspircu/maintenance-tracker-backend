@@ -1,27 +1,17 @@
 const knex = require("knex");
+const knexConfig = require("./knexfile");
 const { Model } = require("objection");
+const express = require("express");
 const User = require("./models/User");
 
-async function main() {
-  const dataBase = knex({
-    client: "pg",
-    connection: {
-      host: "127.0.0.1",
-      database: "Bryan"
-    },
-    debug: true
-  });
+const dataBase = knex(knexConfig.development);
+Model.knex(dataBase);
 
-  Model.knex(dataBase);
-  //   const pets = await person
-  //   .$relatedQuery('pets')
-  //   .where('species', 'dog')
-  //   .orderBy('name');
-  const bryan = await User.query()
-    .findOne({ first_name: "Bryan" })
-    .eager("vehicles");
-
-  console.log(bryan);
-}
-
-main();
+const app = express();
+const port = 3000;
+app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/users", async (req, res) => {
+  const users = await User.query();
+  res.send(JSON.stringify(users));
+});
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
