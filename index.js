@@ -14,4 +14,16 @@ app.get("/users", async (req, res) => {
   const users = await User.query();
   res.send(JSON.stringify(users));
 });
+app.post("/user", async (req, res) => {
+  const newUser = await User.query().insert({
+    firstName: "Brian",
+    lastName: "Hall"
+  });
+  console.log(newUser);
+  res.sendStatus(200);
+});
+app.get("/users/:userId", async (req, res) => {
+  const user = await User.query().findById(req.params.userId);
+  res.send(JSON.stringify(user));
+});
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
