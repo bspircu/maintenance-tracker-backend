@@ -1,5 +1,5 @@
 const BaseModel = require("./BaseModel");
-const { Model, ref } = require("objection");
+const { Model } = require("objection");
 
 class User extends BaseModel {
   static get tableName() {
