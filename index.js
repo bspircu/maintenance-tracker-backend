@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const knexConfig = require("./knexfile");
 const User = require("./models/User");
+const Manufacturer = require("./models/Manufacturer");
 
 // Initialize database and inject it into objection's Model
 const dataBase = knex(knexConfig.development);
@@ -28,6 +29,7 @@ app.get("/users/:userId", async (req, res) => {
   const user = await User.query().findById(req.params.userId);
   res.send(JSON.stringify(user));
 });
+
 app.post("/user", async (req, res) => {
   try {
     await User.query().insert({
@@ -41,5 +43,18 @@ app.post("/user", async (req, res) => {
   }
 });
 
+app.get("/manufacturers", async (req, res) => {
+  const manufacturers = await Manufacturer.query();
+  res.send(JSON.stringify(manufacturers));
+});
+
+app.get("/manufacturers/:manufacturerId", async (req, res) => {
+  const manufacturer = await Manufacturer.query().findById(
+    req.params.manufacturerId
+  );
+  res.send(JSON.stringify(manufacturer));
+});
+
 const port = 3000;
 app.listen(port, () => console.log(`App listening on port ${port}`));
+
